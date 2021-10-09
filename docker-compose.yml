@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    command: --label-enable --cleanup --include-stopped --revive-stopped --interval 60
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  packetstream:
+    image: packetstream/psclient:latest
+    environment:
+      CID: 2RcU
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    restart: unless-stopped
